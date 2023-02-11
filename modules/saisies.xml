@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+		<menu titre="Saisie utilisateur">
+			<item>def saisie = saisieUtilisateur()</item>
+			<item>def saisie = saisieUtilisateur(String title)</item>
+			<item>def saisie = saisieUtilisateur(String title,String message)</item>
+			<item>float saisie = saisieChiffre()</item>
+			<item>float saisie = saisieChiffre(String title)</item>
+			<item>float saisie = saisieChiffre(String title,String message)</item>
+			<item>int saisie = saisieSlider(String title,String message,int defaut)</item>
+			<item>boolean reponse = yORnQuestion(String titre,String message)</item>
+			<item>String choix = choixUtilisateur(def possibilites,def choixpardefaut,String titre,String message)</item>
+			<item>Matrix matrix = saisieMatrix(String title=null,String message=null,def rw=2,def col=2)</item>
+			<item>def selection = saisieSelect(String title=null,String message=null,def liste = [1,2,3],def multiple=false)</item>
+		</menu>
+		<menu titre="Ouvrir un fichier">
+			<item>def cheminFichier = chemin_ouvrirFichier()</item>
+			<item>def cheminFichier = chemin_ouvrirFichier(String title)</item>
+			<item>def cheminFichier = chemin_ouvrirFichier(String title,String extension)</item>
+			<item>def cheminsFichiers = chemin_ouvrirFichiers()</item>
+			<item>String fichier = ouvrirFichier()</item>
+			<item>String fichier = ouvrirFichier(String title)</item>
+			<item>String fichier = ouvrirFichier(String title,String extension)</item>
+		</menu>
+		<menu titre="Enregistrer un fichier">
+			<item>def cheminFichier = chemin_enregistrerFichier()</item>
+			<item>def cheminFichier = chemin_enregistrerFichier(String title)</item>
+			<item>def cheminFichier = chemin_enregistrerFichier(String title,String extension)</item>
+			<item>enregistrerFichier(String texte)</item>
+			<item>enregistrerFichier(String texte,String title)</item>
+			<item>enregistrerFichier(String texte,String title,String extension)</item>
+		</menu>
+</document>

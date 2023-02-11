@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+		<menu titre="Détails sur un CSV">
+			<item>Outils.printHeader(def file) // Affiche le header d'un fichier CSV</item>
+			<item>String header = Outils.header(def file) // Met le header d'un fichier CSV dans la variable header</item>
+			<item>def nblines = nbLine(def file,boolean header=false) // Compte le nombre de lignes d'un fichier CSV (en comptant le header ou non)</item>
+		</menu>
+		<menu titre="Importation CSV - Table">
+			<item>Table table = new Table(def fichier,String separateur = ',')</item>
+			<item>Object[]  col = table.getCol(int c>Object[]  col = table.getCol(String nom>Object[]  row = table.getRow(int r) // même chose avec set</item>
+			<item>Object o = table[c][r]// Dans la première version, il faut compter de 0 à size-1</item>
+			<item>Object o = table.get(int c, int r) // dans la deuxieme, dans la deuxieme : 1 à size</item>
+			<item>table.nbline</item>
+			<item>table.nbcol</item>
+		</menu>
+		<menu titre="Matrice">
+			<item>Matrix matrix = new Matrix(def nbrow,def nbcol,def fill = 0)</item>
+			<item>Matrix matrix = new Matrix(BigDecimal[][] data)</item>
+			<item>Matrix matrix = createMatrixFromCSV(def cheminCSV)</item>
+			<item>matrix.copy() // Retourne une copie de la matrice</item>
+			<item>matrix.transpose() // transpose la matrice</item>
+			<item>matrix.add(matrix2) // ajoute la matrice 2 à la matrice 1</item>
+			<item>matrix.add(2) // ajoute 2 à chaque élèment de la matrice</item>
+			<item>matrix.op({x-> x>seuil?1:0}) // binarise la matrice au dépend d'un seuil</item>
+			<item>matrix.op(matrix2,{x,y-> x+2/y}) // fait une opération par rapport à une autre matrice</item>
+			<item>matrix[0] // Retourne la premiere ligne de la matrice</item>
+			<item>matrix.getRow(1) // Retourne la première ligne de la matrice</item>
+			<item>matrix.set(i,j,5) // Set 5 à la ième ligne et à la jème colonne</item>
+			<item>matrix.getCol(1) // Retourne la première colonne de la matrice</item>
+		</menu>
+		<menu titre="Opérations sur un fichier">
+			<item>operateOnFile(def file,Callable c= {line,i-> synchronized(this){println line}},boolean firstline=false)</item>
+			<item>operateOnFile(def file){line,i -> ...}</item>
+		</menu>
+		<item>boolean ok = Outils.requireLicence(String licenKey) // retourne true si l'utilisateur a rentré la bonne clef, false sinon</item>
+		<item>def script = Parametres.SCRIPT // script devient la variable définissant le script en cours d'utilisation</item>
+		<item>def nbThreads = Parametres.THREADS // donne le nombre de coeurs disponibles pour la machine</item>
+		<item>Outils.copyProperties(source, target) // copie les paramètres d'un objet dans un autre du même type.</item>
+</document>

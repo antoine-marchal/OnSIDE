@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+		<menu titre="Recherche">
+			<item>List resultFound = search(Variable[] decisionVars) // Lance la recherche en démarrant par le maximum du domaine des variables</item>
+			<item>List resultFound = search(Variable[] decisionVars,boolean maxDomaine) // Lance la recherche en choisissant le max ou le min du domaine</item>
+			<item>List resultFound = search(Variable[] decisionVars,boolean maxDomaine=true,Variable toMinimize) // Lance la recherche en choisissant une variable à minimiser\t\t</item>
+			<item>List resultFound = search(Variable[] decisionVars,boolean maxDomaine=true,Variable toMinimize=null,int timeout) // Lance la recherche en spécifiant un timeout (sec)</item>
+			<item>//search renvoie une liste des variables de décisions</item>
+			<item>List resultsFound = searchAll(Variable[] decisionVars) // Lance la recherche en démarrant par le maximum du domaine des variables</item>
+			<item>List resultsFound = searchAll(Variable[] decisionVars,boolean maxDomaine) // Lance la recherche en choisissant le max ou le min du domaine</item>
+			<item>List resultsFound = searchAll(Variable[] decisionVars,boolean maxDomaine=true,Variable toMinimize) // Lance la recherche en choisissant une variable à minimiser\t\t</item>
+			<item>List resultsFound = searchAll(Variable[] decisionVars,boolean maxDomaine=true,Variable toMinimize=null,int timeout) // Lance la recherche en spécifiant un timeout (sec)</item>
+			<item>List resultsFound = searchAll(Variable[] decisionVars,boolean maxDomaine=true,Variable toMinimize=null,int timeout=null,int nbsolsAafficher) // Lance la recherche en spécifiant un timeout (sec)</item>
+			<item>//searchAll renvoie une liste des listes des variables de décisions</item>
+		</menu>
+		<menu titre="Variables">
+			<item>Variable var = new Variable(int minimum,int maximum)</item>
+			<item>Variable var = new Variable(String nom,int min, int max)</item>
+			<item>int value = var.value()</item>
+		</menu>
+		<menu titre="Contraintes [C:constante,XYZQ:variables,c:contrainte]">
+			<item>impose(Contrainte c) // Impose la contrainte au problème</item>
+			<menu titre="Contraintes dures">
+				<item>new AbsXeqY(Variable x, Variable y) //  |X| == Y</item>
+				<item>new Alldiff(Variable[] variables) // \\-/ X,Y in variables X != Y</item>
+				<item>new And(Contrainte[] c) //  = c1 and c2 and ...</item>
+				<item>new Or(Contrainte[] c) //  = c1 or c2 or ...</item>
+				<item>new Distance(Variable x, Variable y, Variable z) //  |X - Y| == Z</item>
+				<item>new Eq(Contrainte c1, Contrainte c2) // c1 &lt;=&gt; c2</item>
+				<item>new IfThen(Contrainte condC, Contrainte thenC) // si condC vraie alors thenC doit être vraie</item>
+				<item>new IfThenElse(Contrainte condC, Contrainte thenC, Contrainte elseC)</item>
+				<item>new Not(Contrainte c) // == !c</item>
+			</menu>
+			<menu titre="Contraintes sur les variables">
+				<item>new XdivYeqZ(Variable x, Variable y, Variable z) // X / Y == Z</item>
+				<item>new XeqC(Variable x, int c) // X == C</item>
+				<item>new XneqC(Variable x, int c) // X != C</item>
+				<item>new XeqY(Variable x, Variable y) // X == Y</item>
+				<item>new XneqY(Variable x, Variable y) // X != Y</item>
+				<item>new XexpYeqZ(Variable x, Variable y, Variable z) // X^Y == Z</item>
+				<item>new XgtC(Variable x, int c) // X > C</item>
+				<item>new XgteqC(Variable x, int c) // X >= C</item>
+				<item>new XgtY(Variable x, int y) // X > Y</item>
+				<item>new XgteqY(Variable x, int y) // X >= Y</item>
+				<item>new XltC(Variable x, int c) // X &lt; C</item>
+				<item>new XlteqC(Variable x, int c) // X &lt;= C</item>
+				<item>new XltY(Variable x, int y) // X &lt; Y</item>
+				<item>new XlteqY(Variable x, int y) // X &lt;= Y</item>
+				<item>new XmodYeqZ(Variable x, Variable y, Variable z) // X mod Y == Z</item>
+				<item>new XmulCeqZ(Variable x, int c, Variable z) // X * C == Z</item>
+				<item>new XmulYeqC(Variable x, Variable y, int c) // X * Y == C</item>
+				<item>new XmulYeqZ(Variable x, Variable y, Variable z) // X * Y == Z</item>
+				<item>new XplusCeqZ(Variable x, int c, Variable z) // X + C == Z</item>
+				<item>new XplusClteqZ(Variable x, int c, Variable z) // X + C &lt;= Z</item>
+				<item>new XplusYeqC(Variable x, Variable y, int c) // X + Y == C</item>
+				<item>new XplusYeqZ(Variable x, Variable y, Variable z) // X + Y == Z</item>
+				<item>new XplusYgtC(Variable x, Variable y, int c) // X + Y > C</item>
+				<item>new XplusYlteqZ(Variable x, Variable y, Variable z) // X + Y &lt;= Z</item>
+				<item>new XplusYplusCeqZ(Variable x, Variable y, int c, Variable z) // X + Y + C == Z</item>
+				<item>new XplusYplusQeqZ(Variable x, Variable y, Variable q, Variable z) // X + Y + Q == Z</item>
+				<item>new XplusYplusQgtC(Variable x, Variable y, Variable q, int c) // X + Y + Q >= C</item>
+			</menu>
+			<menu titre="Contraintes opératoires">
+				<item>new AndBool(Variable[] list, Variable result) // result = X1bin * X2bin * X3bin * ... </item>
+				<item>new OrBool(Variable[] list, Variable result) // result = X1bin (+) X2bin (+) X3bin (+) ... </item>
+				<item>new EqBool(Variable[] list, Variable result) // result = (variables dans liste sont tous egaux)</item>
+				<item>new Count(Variable[] list, Variable counter, int value) // counter = nb(var in list) == value</item>
+				<item>new Max(Variable[] list, Variable max) // max = Max(list)</item>
+				<item>new Min(Variable[] list, Variable min) // min = Min(list)</item>
+				<item>new Sum(Variable[] list, Variable sum) // sum = Sum(list)</item>
+				<item>new SumWeight(Variable[] list, int[] weights, Variable sum) // sum = Sum(list*weights)</item>
+				<item>new Values(Variable[] list, Variable count) // count = Sum(differents(list))</item>
+			</menu>
+		</menu>
+</document>

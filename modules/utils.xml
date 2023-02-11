@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+				<menu titre="Manipulation">
+			<menu titre="Boucle">
+				<item>for(i in (0..200)){ println i }</item>
+				<item>(0..200).each{ println it }</item>
+				<item>(0..200).eachWithIndex{ it, index -> println "$index => $it"}</item>
+				<item>(0..200).collect{ it%2 } // génère une liste à partir d'éléments manipulés d'une autre liste</item>
+			</menu>
+			<menu titre="Conversion">
+				<item>(0..200) as int[]</item>
+				<item>(0..200) as String[]</item>
+				<item>"2" as int</item>
+			</menu>
+			<menu titre="Chaînes de caractères">
+				<item>println "Ippon"</item>
+				<item>println "de A à Z et de "+1+" à "+3</item>
+				<item>println "de A à Z et de ${1} à ${3}"</item>
+				<item>println "Pi = ${22/7}"</item>
+				<item>def pi = 22/7</item>
+				<item>println "Pi = $pi"</item>
+			</menu>
+			<menu titre="Définitions">
+				<item>def var = 2</item>
+				<item>def var = "deux"</item>
+				<item>int var = 2</item>
+				<item>String var = "deux"</item>
+				<item>def var = new Variable()</item>
+				<item>Variable var = new Variable()</item>
+			</menu>
+		</menu>
+		<menu titre="Chronometre">
+			<item>Chrono chron = new Chrono()</item>
+			<item>chron.start()</item>
+			<item>chron.stop()</item>
+			<item>println chron</item>
+		</menu>
+		<menu titre="Barre de progression">
+			<item>setPb(BigDecimal pc)</item>
+			<item>setPb(int pc100)</item>
+			<item>addPb(BigDecimal d)</item>
+			<item>addPb(int i)</item>
+			<item>closePb()</item>
+		</menu>
+		<menu titre="Traitement en parallèle">
+			<item>def pool = new Pool() // Créer un pool de threads = au nb de coeurs du processeur</item>
+			<item>pool.execute{...} // soumet un code à executer par le pool.</item>
+			<item>pool.execute{synchronized(this){.A.};.B.} // .A. ne peut être exécuté par un seul thread à la fois, .B. peut être exécuté par plusieurs thread à la fois</item>
+			<item>pool.await() // Le script attend que le pool ait terminé son travail</item>
+		</menu>
+		<menu titre="Stats">
+			<item>def stats = new Stats() // Créer un outil de calcul de stats</item>
+			<item>stats.correlation(def X,def Y) // Calcule la correlation entre les deux vecteurs X et Y</item>
+			<item>def m = stats.matrix(def M) // Créer une matrice M à partir d'une double liste</item>
+			<item>m.transpose()</item>
+			<item>double[] r = m.getRow(int i)</item>
+			<item>double[] c = m.getColumn(int i)</item>
+			<item>int nbr = m.getRowDimension()</item>
+			<item>m.add(def m2)</item>
+			<item>// voir http://commons.apache.org/proper/commons-math/apidocs/org/apache/commons/math3/linear/RealMatrix.html</item>
+		</menu>
+</document>

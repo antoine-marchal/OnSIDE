@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<item>String logs = console() // Met la console dans une variable String</item>
+	<item>enregistrerConsole() // Enregistrer le résultat de la console dans un fichier</item>
+</document>

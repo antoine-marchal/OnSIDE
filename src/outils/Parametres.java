@@ -17,7 +17,7 @@ public class Parametres {
 	/**
 	 * Version du logiciel
 	 */
-	public final static String version ="1.7";
+	public final static String version ="1.8";
 	/**
 	 * Titre de l'application
 	 */

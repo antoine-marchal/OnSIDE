@@ -2,7 +2,7 @@ package ui;
 
 import java.awt.EventQueue;
 import java.io.IOException;
-import engine.AES;
+
 import outils.Parametres;
 import ui.panels.Window;
 
@@ -23,9 +23,9 @@ public class Main {
 	 * @throws IOException 
 	 */
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+	
 		Parametres.initializeKey();
-
 		if(args.length > 0)arg = args[0];
 		System.setProperty("awt.useSystemAAFontSettings", "lcd");
 		EventQueue.invokeLater(new Runnable() {

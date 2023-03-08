@@ -15,7 +15,7 @@
   <icon>data_lib\icone.ico</icon>
   <jre>
     <path>jre</path>
-    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJre64Bit>true</bundledJre64Bit>
     <minVersion>1.7.0</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
@@ -25,8 +25,8 @@
   </jre>
   <splash>
     <file>data_lib\loading.bmp</file>
-    <waitForWindow>true</waitForWindow>
-    <timeout>60</timeout>
+    <waitForWindow>false</waitForWindow>
+    <timeout>3</timeout>
     <timeoutErr>true</timeoutErr>
   </splash>
 </launch4jConfig>

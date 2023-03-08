@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.Random;
@@ -45,24 +44,25 @@ public class Export {
 	 */
 	public static void main(String[] args) throws Exception{
 
-		
+
 		File xml = new File("build.xml");
 		ConfigPersister.getInstance().load(xml);
 		Builder b = new Builder(Log.getConsoleLog());
 		b.build();
-		
+
 	}
+	@SuppressWarnings("resource")
 	private static void copyFileUsingChannel(File source, File dest) throws IOException {
-	    FileChannel sourceChannel = null;
-	    FileChannel destChannel = null;
-	    try {
-	        sourceChannel = new FileInputStream(source).getChannel();
-	        destChannel = new FileOutputStream(dest).getChannel();
-	        destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-	       }finally{
-	           sourceChannel.close();
-	           destChannel.close();
-	   }
+		FileChannel sourceChannel = null;
+		FileChannel destChannel = null;
+		try {
+			sourceChannel = new FileInputStream(source).getChannel();
+			destChannel = new FileOutputStream(dest).getChannel();
+			destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+		}finally{
+			sourceChannel.close();
+			destChannel.close();
+		}
 	}
 	/**
 	 * Méthode assurant la création de l'exe autonome pour un script donné
@@ -80,21 +80,20 @@ public class Export {
 		File xmlo = new File("data_lib/"+ran.nextLong());
 		File title = new File("data_lib/title.txt");
 		System.out.println("Begin");
-		
-		
+
+
 		try{
-			//FileUtils.copyFile(source, dest);
-			//Files.copy(source.toPath(),dest.toPath());
+
 			copyFileUsingChannel(source,dest);
 			FileUtils.writeStringToFile(title, AES.encrypt(titleString),Charset.defaultCharset(), false);
-			
+
 			File[] files = {title,script};
 			addFilesToExistingZip(dest,files,"lib/");
-			
+
 			for(File f : new File("onside_lib/").listFiles()) {
 				if(f.getName().toLowerCase().endsWith("jar"))addFileToExistingZip(dest,f,"onside_lib/");;
 			}
-			
+
 			System.out.println("Done");
 
 			SAXBuilder sxb = new SAXBuilder();
@@ -128,24 +127,26 @@ public class Export {
 
 	}
 	public static void addFileToExistingZip(File zipFile, File f,String path) throws Exception {
-		 
+
+		@SuppressWarnings("resource")
 		ZipFile zF = new ZipFile(zipFile);
 
-			ZipParameters zipParameters = new ZipParameters();
-			zipParameters.setFileNameInZip(path+f.getName());
-			zF.addFile(f,zipParameters);
-		
+		ZipParameters zipParameters = new ZipParameters();
+		zipParameters.setFileNameInZip(path+f.getName());
+		zF.addFile(f,zipParameters);
+
 	}
 	public static void addFilesToExistingZip(File zipFile, File[] files,String path) throws Exception {
-		 
+
+		@SuppressWarnings("resource")
 		ZipFile zF = new ZipFile(zipFile);
-		
+
 		for(File f : files) {
 			ZipParameters zipParameters = new ZipParameters();
 			zipParameters.setFileNameInZip(path+f.getName());
 			zF.addFile(f,zipParameters);
 		}
-	}
+	}	
 	/**
 	 * Méthode ajoutant une liste de fichier dans une archive ZIP (ou JAR) 
 	 * @param zipFile : Chemin de l'archive
@@ -156,9 +157,9 @@ public class Export {
 	public static void addFilesToExistingZipBACK(File zipFile,
 			File[] files,String path) throws IOException {
 		// get a temp file
-		
+
 		File tempFile = File.createTempFile("tmp", ".zip", zipFile.getParentFile());
-		
+
 		// delete it, otherwise you cannot rename your existing zip to it.
 		tempFile.delete();
 

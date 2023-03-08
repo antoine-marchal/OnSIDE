@@ -8,10 +8,16 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
+import de.schlichtherle.truezip.file.TFile;
+import de.schlichtherle.truezip.file.TConfig;
+import de.schlichtherle.truezip.fs.archive.zip.ReadOnlySfxDriver;
+import de.schlichtherle.truezip.socket.sl.IOPoolLocator;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import net.lingala.zip4j.exception.ZipException;
 import outils.Parametres;
 import ui.panels.Console;
 import ui.panels.Editor;
@@ -74,11 +80,53 @@ public class ScriptManager {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+	public static List<File> extractEmbeddedLibrairies(String pattern) throws ZipException, IOException {
+		
+		TConfig.get().setArchiveDetector(new de.schlichtherle.truezip.file.TArchiveDetector(de.schlichtherle.truezip.file.TArchiveDetector.NULL,"exe",new ReadOnlySfxDriver(IOPoolLocator.SINGLETON)));
+		String executableName = new File(System.getProperty("java.class.path")).getName();
+		List<File> jarFiles = new ArrayList<>();
+		TFile archive = new TFile(new File(executableName).getAbsolutePath());
+		archive.setReadOnly();
+
+		TFile[] entries = null ;
+		TFile[] rootEntries = archive.listFiles();
+		if(rootEntries != null) {
+			for (TFile entry : rootEntries) {
+				
+				if(entry.getName().contains(pattern.substring(0,pattern.length()-1)))entries=entry.listFiles();
+			}
+			if(entries!=null) {
+				new File(pattern).mkdir();
+				for (TFile entry : entries) {
+					String entryName = entry.getName();
+					if (entryName.endsWith(".jar")) {
+						File outputFile = new File(pattern+entryName);
+						entry.toNonArchiveFile().cp(outputFile);
+						jarFiles.add(outputFile);
+					}
+				}
+
+			}
+		}
+		return jarFiles;
+	}
+
+
+	private static List<File> embeddedLibrairies = new ArrayList<File>(0);
 	public static void refreshChildCL(){
 
 		ArrayList<URL> tab_url = new ArrayList<URL>();
+		String pattern = "onside_lib/";
+		try {
+			embeddedLibrairies=extractEmbeddedLibrairies(pattern);
+		} catch (ZipException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		File dir = new File("onside_lib/");
 		if(dir.exists()){
 			File[] tab_file = dir.listFiles(new FilenameFilter(){
@@ -102,14 +150,33 @@ public class ScriptManager {
 		URL[] ar_url = tab_url.toArray(new URL[tab_url.size()]);
 		childcl = new URLClassLoader(ar_url,ScriptManager.class.getClassLoader());
 		shell=new GroovyShell(childcl,binding);
+		
+		//Remove the embeddedLibrairies at the end of the execution and the folder if it was created for that purpose
+	
+		if(embeddedLibrairies.size()>0) {
+			Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+		        public void run() {
+		        	try {
+						childcl.close();
+						shell.getClassLoader().close();
+						for(File f : embeddedLibrairies) {
+							f.delete();
+						}
+						if(dir.listFiles().length==0)dir.delete();
+					} catch (Exception e) {
+					}
+		        }
+			}, "Shutdown-thread"));
+			
+		}
 	}
-
 	/**
 	 * Constructeur.
 	 * @param window : Le scriptManager est parent é la fenétre principale de l'application
 	 */
 	public ScriptManager(Window window){
 		this.window=window;
+
 	}
 	/**
 	 * Ouvre un script OnSIDE (Groovy)

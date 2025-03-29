@@ -1,71 +1,97 @@
-# OnSIDE
+# OnSIDE - Optimisation Script Integrated Development Environment
 
-OnSIDE ou Optimisation Script Integrated Development Environment est une application développée
-sous JAVA qui représente un réel support de développement de scripts et de micro-applications visant
-à résoudre des problèmes de manipulation de données et/ou des problèmes d'optimisation par
-contraintes.
+## Présentation
 
-OnSIDE est donc avant tout un IDE offrant la possibilité à l'utilisateur de développer des scripts
-exécutables à l'aide de l'application ou d'exporter ces scripts en micro-applications autonomes.
+OnSIDE (Optimisation Script Integrated Development Environment) est une application développée en Java qui offre un environnement de développement intégré pour la création de scripts et de micro-applications. Ces scripts sont principalement destinés à résoudre des problèmes de manipulation de données et/ou des problèmes d'optimisation par contraintes.
 
-OnSIDE est développé sous JAVA, ce qui peut lui valoir une compatibilité avec tous les systèmes d’exploitation comportant la machine virtuelle JAVA.
-Malgré cela, pour des soucis de compatibilité qui ne sont pas encore traités, le logiciel est restreint au système d’exploitation Windows et à JAVA dans sa version 1.7+.
+L'application permet aux utilisateurs de développer des scripts exécutables directement dans l'environnement ou d'exporter ces scripts en micro-applications autonomes sous forme d'exécutables Windows.
 
-# Librairies
+## Compatibilité
 
-OnSIDE embarque tout un tas de librairies participent à son fonctionnement, on retrouve alors :
+OnSIDE est développé en Java, ce qui lui confère une compatibilité potentielle avec tous les systèmes d'exploitation disposant d'une machine virtuelle Java. Cependant, pour des raisons de compatibilité qui n'ont pas encore été résolues, le logiciel est actuellement limité au système d'exploitation Windows et requiert Java dans sa version 1.7 ou supérieure.
 
-*	Launch4j : Une librairie qui transforme une application JAVA distribuée comme un .jar exécutable en une application exécutable nativement par Windows.
-http://launch4j.sourceforge.net/
-*	JaCoP : Une librairie qui apporte un moteur de résolution de programmation par contraintes.
-http://jacop.osolpro.com/
-*	Groovy : C’est une surcouche de JAVA qui permet de fournir un autre langage orienté objet, plus souple. C’est un langage dynamique avec des fonctionnalités similaires à celles de langages comme Python, Ruby ou Perl. Un script Groovy peut être interprété ou, ici, compilé de façon dynamique en du bytecode JAVA.
-http://groovy.codehaus.org/Embedding+Groovy
-*	RSyntaxTextArea : Cette librairie fournit un éditeur de code compatible avec le langage Groovy.
-http://fifesoft.com/rsyntaxtextarea/
+## Architecture du projet
 
-# Compilation
+Le projet est organisé en plusieurs packages principaux :
 
-Il existe trois points d'entrée dans le projet situées dans les classes Main, ModelBuild et Export.
-* Le point d'entrée de la classe Main correspond à l'execution principale du logiciel. Une extraction en fichier .jar executable (en prenant soin de séparer le fichier jar des librairies) permet de générer le fichier exec.jar, point d'entrée principale du logiciel.
-* Le point d'entrée de la classe ModelBuild correspond à l'execution des exports de script sous format executable. Il doit etre compilé en prenant le soin d'y intégrer les librairies du classpath vers data_lib/modelbuild.jar.
-* Le point d'entrée de la classe Export permet de transformer le fichier exec.jar en fichier OnSIDE.exe, executable principal du logiciel.
+- **engine** : Contient les classes principales pour l'exécution des scripts (ScriptManager), le chiffrement (AES), l'exportation (Export) et la redirection de la console (TextAreaPrintStream).
+- **outils** : Regroupe les classes utilitaires comme Parametres (constantes et configuration) et Utils (fonctions diverses).
+- **ui** : Contient les classes d'interface utilisateur, notamment Main (point d'entrée), ModelBuild (pour les applications autonomes) et les différents panneaux de l'interface.
 
+## Points d'entrée
 
-## Les scripts 
+Il existe trois points d'entrée dans le projet, situés dans les classes suivantes :
 
-Les scripts développés sur OnSIDE sont donc des scripts Groovy.
-En revanche, en vue de simplifier au maximum le développement de ces scripts, une surcouche de Groovy a été développée pour simplifier l’accès aux fonctionnalités utiles que l’on voudrait avoir dans un script d’optimisation.
-Ces fonctions sont cataloguées dans la bibliothèque du logiciel.
-Cette surcouche est en réalité un script Groovy qui précède de façon invisible le script développé par l’utilisateur.
-Il est ainsi possible de développer des « modules » afin d’agrémenter une série de scripts utilisant des fonctions parfois compliquées à expliciter.
+1. **Main** : Point d'entrée principal du logiciel. Une extraction en fichier .jar exécutable (en séparant le fichier jar des bibliothèques) permet de générer le fichier exec.jar, point d'entrée principal du logiciel.
 
-## Fonctionalités
+2. **ModelBuild** : Point d'entrée pour l'exécution des exports de script sous format exécutable. Il doit être compilé en prenant soin d'y intégrer les bibliothèques du classpath vers data_lib/modelbuild.jar.
 
-Le logiciel offre un ensemble de fonctionnalités tournant autour du Scripting mais aussi à l'aide au
-développement en plus de quelques autres fonctionnalités.
-On retrouve notamment la possibilité de :
-* Créer/Ouvrir/Editer un nouveau script
-* Lancer ce script directement à travers le logiciel
-* Exporter ce script en application autonome sous le format exécutable nativement par Windows (.exe)
-* Permettre l'auto complétion dans le développement d'un script
-* Réunir une bibliothèque de fonctions utiles à :
-	* La manipulation des données
-	* L'importation et l'exportation de ces données
-	* La création d'interactions entre l'utilisateur et le script une fois lancé
-	* L'implémentation et la résolution d'un problème de satisfactions de contraintes
-	* La création d'un pool de thread et à son utilisation
-* Protéger tout ou une partie du script par chiffrage AES
-* Devenir évolutif en autorisant les développeurs à créer des modules pouvant être utilisés par des tiers
+3. **Export** : Permet de transformer le fichier exec.jar en fichier OnSIDE.exe, exécutable principal du logiciel.
 
-## Principe 
+## Technologie des scripts
 
-Ce logiciel a été développé à travers des demandes qui étaient à la fois de fournir un moyen de créer
-et de résoudre des problèmes de programmation par contraintes et de fournir des outils clé en mains
-de type« press button ».
-Finalement, OnSIDE est un support viable et complémentaire aux outils utilisés dans ce domaine tels
-que R et JMP et offre par la même, une ouverture sur le domaine de la programmation par contraintes.
+Les scripts développés sur OnSIDE sont des scripts Groovy. Pour simplifier le développement, une surcouche de Groovy a été implémentée pour faciliter l'accès aux fonctionnalités utiles dans un script d'optimisation. Ces fonctions sont cataloguées dans la bibliothèque du logiciel.
 
-# Version
+Cette surcouche est en réalité un script Groovy qui précède de façon invisible le script développé par l'utilisateur. Il est ainsi possible de développer des « modules » afin d'enrichir une série de scripts utilisant des fonctions parfois complexes.
 
-Le logiciel a été développé en 2014. Bien qu'il me soit toujours utile, de faibles ajouts ont été réalisés depuis la première version.
+## Modules disponibles
+
+OnSIDE propose plusieurs modules prédéfinis pour faciliter le développement :
+
+- **console** : Fonctions d'affichage et d'interaction avec la console
+- **csp** : Fonctions pour la programmation par contraintes (Constraint Satisfaction Problem)
+- **donnees** : Fonctions de manipulation de données
+- **saisies** : Fonctions pour la saisie et l'interaction utilisateur
+- **utils** : Fonctions utilitaires diverses
+
+## Fonctionnalités principales
+
+Le logiciel offre un ensemble de fonctionnalités centrées sur le développement de scripts :
+
+- **Création/Édition de scripts** : Interface complète pour créer, ouvrir et éditer des scripts
+- **Exécution intégrée** : Possibilité de lancer les scripts directement dans l'environnement
+- **Exportation** : Conversion des scripts en applications autonomes (.exe) exécutables nativement sous Windows
+- **Assistance au développement** : Auto-complétion pour faciliter l'écriture de code
+- **Bibliothèque de fonctions** : Ensemble de fonctions prédéfinies pour :
+  - La manipulation des données
+  - L'importation et l'exportation de données
+  - La création d'interactions utilisateur
+  - L'implémentation et la résolution de problèmes de satisfaction de contraintes
+  - La gestion de threads et leur utilisation
+- **Sécurité** : Protection de tout ou partie du script par chiffrement AES
+- **Extensibilité** : Possibilité pour les développeurs de créer des modules utilisables par des tiers
+
+## Bibliothèques utilisées
+
+OnSIDE s'appuie sur plusieurs bibliothèques externes pour son fonctionnement :
+
+- **Launch4j** : Transforme une application Java (.jar) en exécutable Windows (.exe)
+  - Site : http://launch4j.sourceforge.net/
+- **JaCoP** : Moteur de résolution de programmation par contraintes
+  - Site : http://jacop.osolpro.com/
+- **Groovy** : Surcouche de Java offrant un langage orienté objet plus souple et dynamique
+  - Site : http://groovy.codehaus.org/Embedding+Groovy
+- **RSyntaxTextArea** : Éditeur de code compatible avec le langage Groovy
+  - Site : http://fifesoft.com/rsyntaxtextarea/
+- **TrueZIP** : Manipulation de fichiers archives
+- **Apache Commons** : Diverses bibliothèques utilitaires
+- **Zip4j** : Manipulation de fichiers ZIP
+
+## Principe et utilisation
+
+OnSIDE a été développé pour répondre à des besoins spécifiques : fournir un moyen de créer et de résoudre des problèmes de programmation par contraintes, et proposer des outils clé en main de type « press button ».
+
+L'application constitue un support viable et complémentaire aux outils utilisés dans le domaine de l'optimisation tels que R et JMP, tout en offrant une ouverture sur le domaine de la programmation par contraintes.
+
+## Sécurité
+
+OnSIDE intègre des fonctionnalités de sécurité permettant de protéger les scripts développés via un chiffrement AES. Cette fonctionnalité est particulièrement utile pour protéger la propriété intellectuelle des scripts ou pour sécuriser des informations sensibles.
+
+## Historique et versions
+
+Le logiciel a été développé initialement en 2014 par Antoine Marchal. Bien qu'il soit toujours utilisé et maintenu, seuls de légers ajouts ont été réalisés depuis la première version. La version actuelle est la 1.8.
+
+## Contact
+
+Pour toute information complémentaire, vous pouvez contacter le développeur principal :
+- Antoine Marchal : antoine.marchal@pm.me
